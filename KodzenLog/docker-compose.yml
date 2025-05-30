@@ -1,12 +1,14 @@
 services:
   backend:
     image: "registry.floxsite.de/cats-backend:latest"
+    platform: linux/arm64
     ports:
       - "7777:5000"
     networks:
       - cat-network
   frontend:
     image: "registry.floxsite.de/cats-frontend:latest"
+    platform: linux/arm64
     ports:
       - "4543:8080"
     depends_on:
