@@ -10,7 +10,7 @@ services:
       - "traefik.http.routers.hv.rule=Host(`bar.floxsite.de`)"
       - "traefik.http.routers.hv.entrypoints=websecure"
       - "traefik.http.routers.hv.tls.certresolver=letsencrypt"
-      - "traefik.http.services.hv.loadbalancer.server.port=8080"
+      - "traefik.http.services.hv.loadbalancer.server.port=3000"
 
 networks:
   FloxNet:
