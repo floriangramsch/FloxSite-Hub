@@ -1,7 +1,17 @@
 services:
   app:
     image: registry.floxsite.de/hv-bingerschlag:latest
-    ports:
-      - "3000:3000"
     env_file:
       - ../../hv-bingerschlag/.env
+    networks:
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hv.rule=Host(`bar.floxsite.de`)"
+      - "traefik.http.routers.hv.entrypoints=websecure"
+      - "traefik.http.routers.hv.tls.certresolver=letsencrypt"
+      - "traefik.http.services.hv.loadbalancer.server.port=8080"
+
+networks:
+  FloxNet:
+    external: true

@@ -7,11 +7,10 @@ services:
       - FloxNet
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.kodzenlog.rule=Host(`kodzenlog.localtest.me`)"
-      - "traefik.http.routers.kodzenlog.entrypoints=web"
-      - "traefik.http.routers.kodzenlog.tls=false"
-      # - "traefik.http.routers.kodzenlog.tls.certresolver=ionos"
-      - "traefik.http.services.kodzenlog.loadbalancer.server.port=8080"
+      - "traefik.http.routers.cats.rule=Host(`cats.floxsite.de`)"
+      - "traefik.http.routers.cats.entrypoints=websecure"
+      - "traefik.http.routers.cats.tls.certresolver=letsencrypt"
+      - "traefik.http.services.cats.loadbalancer.server.port=8080"
 
   backend:
     image: registry.floxsite.de/cats-backend:latest
@@ -19,11 +18,12 @@ services:
       - FloxNet
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.kodzenlog-api.rule=Host(`api.kodzenlog.localtest.me`)"
-      - "traefik.http.routers.kodzenlog-api.entrypoints=web"
-      - "traefik.http.routers.kodzenlog-api.tls=false"
-      # - "traefik.http.routers.kodzenlog-api.tls.certresolver=ionos"
-      - "traefik.http.services.kodzenlog-api.loadbalancer.server.port=5000"
+      - "traefik.http.routers.cats-api.rule=Host(`cats.floxsite.de`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.cats-api.entrypoints=websecure"
+      - "traefik.http.routers.cats-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.cats-api.loadbalancer.server.port=5000"
+      - "traefik.http.middlewares.strip-api.stripprefix.prefixes=/api"
+      - "traefik.http.routers.cats-api.middlewares=strip-api"
 
 networks:
   FloxNet:
