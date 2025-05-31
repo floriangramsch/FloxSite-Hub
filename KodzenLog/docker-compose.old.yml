@@ -1,0 +1,25 @@
+services:
+  kodzenlog-backend:
+    image: "registry.floxsite.de/cats-backend:latest"
+    env_file:
+      - ./.env
+    ports:
+      - "7777:5000"
+    networks:
+      - cat-network
+      - FloxNet
+  kodzenlog-frontend:
+    image: "registry.floxsite.de/cats-frontend:latest"
+    ports:
+      - "4543:8080"
+    depends_on:
+      - backend
+    networks:
+      - cat-network
+      - FloxNet
+
+networks:
+  cat-network:
+    driver: bridge
+  FloxNet:
+    external: true

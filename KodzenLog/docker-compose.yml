@@ -1,21 +1,30 @@
+version: "3.9"
+
 services:
-  backend:
-    image: "registry.floxsite.de/cats-backend:latest"
-    env_file:
-      - ./.env
-    ports:
-      - "7777:5000"
-    networks:
-      - cat-network
   frontend:
-    image: "registry.floxsite.de/cats-frontend:latest"
-    ports:
-      - "4543:8080"
-    depends_on:
-      - backend
+    image: registry.floxsite.de/cats-frontend:latest
     networks:
-      - cat-network
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kodzenlog.rule=Host(`kodzenlog.localtest.me`)"
+      - "traefik.http.routers.kodzenlog.entrypoints=web"
+      - "traefik.http.routers.kodzenlog.tls=false"
+      # - "traefik.http.routers.kodzenlog.tls.certresolver=ionos"
+      - "traefik.http.services.kodzenlog.loadbalancer.server.port=8080"
+
+  backend:
+    image: registry.floxsite.de/cats-backend:latest
+    networks:
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kodzenlog-api.rule=Host(`api.kodzenlog.localtest.me`)"
+      - "traefik.http.routers.kodzenlog-api.entrypoints=web"
+      - "traefik.http.routers.kodzenlog-api.tls=false"
+      # - "traefik.http.routers.kodzenlog-api.tls.certresolver=ionos"
+      - "traefik.http.services.kodzenlog-api.loadbalancer.server.port=5000"
 
 networks:
-  cat-network:
-    driver: bridge
+  FloxNet:
+    external: true
