@@ -1,0 +1,16 @@
+services:
+  hv-bingerschlag:
+    image: "registry.floxsite.de/hv-bingerschlag:latest"
+    env_file:
+      - ./.env
+    ports:
+      - "2230:3000"
+    networks:
+      - hv-network
+      - FloxNet
+
+networks:
+  hv-network:
+    driver: bridge
+  FloxNet:
+    external: true
