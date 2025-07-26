@@ -1,4 +1,8 @@
-.env
+*.env
 acme.json
 traefik/letsencrypt/acme.json
+
+services/registry/registry-data/
+services/registry/auth/
+services/registry/.env
 

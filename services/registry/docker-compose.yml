@@ -1,0 +1,48 @@
+services:
+  registry:
+    image: registry:3
+    container_name: registry
+    restart: always
+    volumes:
+      - ./auth:/auth
+      - ./registry-data:/var/lib/registry
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: "Private Docker Registry"
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+    networks:
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.registry.rule=Host(`registry.floxsite.de`) && PathPrefix(`/v2`)"
+      - "traefik.http.routers.registry.entrypoints=websecure"
+      - "traefik.http.routers.registry.tls.certresolver=letsencrypt"
+      - "traefik.http.services.registry.loadbalancer.server.port=5000"
+
+  registry-ui:
+    image: joxit/docker-registry-ui:latest
+    container_name: registry-ui
+    environment:
+      REGISTRY_TITLE: "Private Docker Registry"
+      REGISTRY_URL: https://registry.floxsite.de
+      DELETE_IMAGES: "true"
+      SINGLE_REGISTRY: "true"
+      REGISTRY_BASIC_AUTH: "true"
+    depends_on:
+      - registry
+    networks:
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      # Router für die UI mit Path-Prefix `/ui`
+      - "traefik.http.routers.registry-ui.rule=Host(`registry.floxsite.de`) && PathPrefix(`/ui`)"
+      - "traefik.http.routers.registry-ui.entrypoints=websecure"
+      - "traefik.http.routers.registry-ui.tls.certresolver=letsencrypt"
+      # StripPrefix Middleware, damit UI korrekt ohne `/ui`-Prefix geladen wird
+      - "traefik.http.middlewares.registry-ui-strip.stripprefix.prefixes=/ui"
+      - "traefik.http.routers.registry-ui.middlewares=registry-ui-strip"
+
+networks:
+  FloxNet:
+    external: true
+
