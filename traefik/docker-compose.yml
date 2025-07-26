@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: traefik:v3.0
+    image: traefik:v3.5
     container_name: traefik
     command:
       - --api.dashboard=true
@@ -19,7 +19,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      # - "8080:8080" # Dashboard
+      - "8080:8080" # Dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
@@ -27,7 +27,14 @@ services:
     networks:
       - FloxNet
 
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.floxsite.de`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
+
 networks:
   FloxNet:
     name: FloxNet
-    external: false
+    external: true

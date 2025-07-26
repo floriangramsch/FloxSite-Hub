@@ -2,17 +2,15 @@ services:
   app:
     image: registry.floxsite.de/hv-bingerschlag:latest
     env_file:
-      - ../../hv-bingerschlag/.env
+      - .env
     networks:
       - FloxNet
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.hv.rule=Host(`bar.floxsite.de`)"
+      - "traefik.http.routers.hv.rule=Host(`bar.floxsite.de`) || Host(`www.bar.floxsite.de`)"
       - "traefik.http.routers.hv.entrypoints=websecure"
       - "traefik.http.routers.hv.tls.certresolver=letsencrypt"
       - "traefik.http.services.hv.loadbalancer.server.port=3000"
-      - "traefik.http.routers.hv.tls.certificates.certFile=/certs/cert.pem"
-      - "traefik.http.routers.hv.tls.certificates.keyFile=/certs/privkey.pem"
 
 networks:
   FloxNet:

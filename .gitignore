@@ -1,1 +1,4 @@
-certs
+.env
+acme.json
+traefik/letsencrypt/acme.json
+
