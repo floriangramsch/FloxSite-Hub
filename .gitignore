@@ -6,3 +6,5 @@ services/registry/registry-data/
 services/registry/auth/
 
 services/Nextcloud/data/
+
+.DS_Store
