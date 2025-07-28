@@ -1,3 +1,5 @@
 services:
   app:
     image: registry.floxsite.de/kindle-dashboard:latest
+    env_file:
+      - .env
