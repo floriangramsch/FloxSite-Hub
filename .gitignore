@@ -4,5 +4,5 @@ traefik/letsencrypt/acme.json
 
 services/registry/registry-data/
 services/registry/auth/
-services/registry/.env
 
+services/Nextcloud/data/
