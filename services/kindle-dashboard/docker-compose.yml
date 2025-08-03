@@ -3,3 +3,6 @@ services:
     image: registry.floxsite.de/kindle-dashboard:latest
     env_file:
       - .env
+    environment:
+      - POLARS_SKIP_CPU_CHECK=1v
+
