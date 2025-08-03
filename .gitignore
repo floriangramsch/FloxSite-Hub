@@ -1,10 +1,16 @@
-*.env
+.env
+.env.*
+!.env.example
 acme.json
 traefik/letsencrypt/acme.json
+services/traefik/certs/
 
 services/registry/registry-data/
 services/registry/auth/
 
 services/Nextcloud/data/
 
+pages/glance/config
+
 .DS_Store
+

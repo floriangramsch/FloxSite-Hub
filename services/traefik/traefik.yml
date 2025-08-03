@@ -12,3 +12,10 @@ certificatesResolvers:
       httpChallenge:
         entryPoint: web
 
+tls:
+  certificates:
+    - certFile: /etc/traefik/certs/remote.crt
+      keyFile: /etc/traefik/certs/remote.key
+    #- certFile: /etc/traefik/certs/remote.crt
+    #keyFile: /etc/traefik/certs/remote.key
+

@@ -1,0 +1,35 @@
+services:
+  remote-ui:
+    image: registry.floxsite.de/remote-ui:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.remote.rule=Host(`remote.debiansatellite.lan`)"
+      - "traefik.http.routers.remote.entrypoints=websecure"
+      - "traefik.http.routers.remote.tls=true"
+      - "traefik.http.services.remote.loadbalancer.server.port=3000"
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.ui
+    networks:
+      - FloxNet
+  remote-api:
+    image: registry.floxsite.de/remote-api:latest
+    ports:
+      - "5002:8000"
+    env_file:
+      - .env.api
+    networks:
+      - FloxNet
+        #  lights:
+        #image: registry.floxsite.de/lights:latest
+        #ports:
+        #- "5001:8000"
+        #env_file:
+        #- .env.lights
+        #networks:
+        #- FloxNet
+
+networks:
+  FloxNet:
+    external: true
