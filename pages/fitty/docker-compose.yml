@@ -1,0 +1,19 @@
+services:
+  app:
+    image: registry.floxsite.de/fitty:latest
+    volumes:
+      - ./uploads:/uploads
+    env_file:
+      - .env
+    networks:
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fitty.rule=Host(`fitty.floxsite.de`) || Host(`www.fitty.floxsite.de`)"
+      - "traefik.http.routers.fitty.entrypoints=websecure"
+      - "traefik.http.routers.fitty.tls.certresolver=letsencrypt"
+      - "traefik.http.services.fitty.loadbalancer.server.port=3000"
+
+networks:
+  FloxNet:
+    external: true

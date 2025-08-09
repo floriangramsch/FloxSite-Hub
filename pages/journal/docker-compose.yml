@@ -1,0 +1,17 @@
+services:
+  app:
+    image: registry.floxsite.de/journal:latest
+    env_file:
+      - .env
+    networks:
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.journal.rule=Host(`journal.floxsite.de`) || Host(`www.journal.floxsite.de`)"
+      - "traefik.http.routers.journal.entrypoints=websecure"
+      - "traefik.http.routers.journal.tls.certresolver=letsencrypt"
+      - "traefik.http.services.journal.loadbalancer.server.port=3000"
+
+networks:
+  FloxNet:
+    external: true

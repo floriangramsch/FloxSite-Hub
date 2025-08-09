@@ -1,0 +1,17 @@
+services:
+  app:
+    image: registry.floxsite.de/advent:latest
+    env_file:
+      - .env
+    networks:
+      - FloxNet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.advent.rule=Host(`advent.floxsite.de`) || Host(`www.advent.floxsite.de`)"
+      - "traefik.http.routers.advent.entrypoints=websecure"
+      - "traefik.http.routers.advent.tls.certresolver=letsencrypt"
+      - "traefik.http.services.advent.loadbalancer.server.port=3000"
+
+networks:
+  FloxNet:
+    external: true
