@@ -1,6 +1,7 @@
 services:
   app:
     image: registry.floxsite.de/journal:latest
+    restart: always
     env_file:
       - .env
     networks:

@@ -21,6 +21,7 @@ services:
 
   registry-ui:
     image: joxit/docker-registry-ui:latest
+    restart: always
     container_name: registry-ui
     environment:
       REGISTRY_TITLE: "Private Docker Registry"
@@ -45,4 +46,3 @@ services:
 networks:
   FloxNet:
     external: true
-

@@ -1,6 +1,7 @@
 services:
   frontend:
     image: registry.floxsite.de/cats-frontend:latest
+    restart: always
     networks:
       - FloxNet
     labels:
@@ -12,6 +13,7 @@ services:
 
   backend:
     image: registry.floxsite.de/cats-backend:latest
+    restart: always
     env_file:
       - .env
     networks:

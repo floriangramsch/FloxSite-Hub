@@ -2,7 +2,7 @@ services:
   pihole:
     image: pihole/pihole:latest
     container_name: pihole
-    restart: unless-stopped
+    restart: always
     networks:
       - FloxNet
     ports:
@@ -24,4 +24,3 @@ services:
 networks:
   FloxNet:
     external: true
-

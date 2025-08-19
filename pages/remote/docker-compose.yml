@@ -1,6 +1,7 @@
 services:
   remote-ui:
     image: registry.floxsite.de/remote-ui:latest
+    restart: always
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.remote.rule=Host(`remote.debiansatellite.lan`)"
@@ -15,6 +16,7 @@ services:
       - FloxNet
   remote-api:
     image: registry.floxsite.de/remote-api:latest
+    restart: always
     ports:
       - "5002:8000"
     env_file:

@@ -1,6 +1,7 @@
 services:
   app:
     image: registry.floxsite.de/fitty:latest
+    restart: always
     volumes:
       - ./uploads:/uploads
     env_file:

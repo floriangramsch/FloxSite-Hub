@@ -2,7 +2,7 @@ services:
   db:
     image: mariadb:11
     container_name: nextcloud-db
-    restart: unless-stopped
+    restart: always
     env_file:
       - .env
     volumes:
@@ -13,7 +13,7 @@ services:
   app:
     image: nextcloud:apache
     container_name: nextcloud-app
-    restart: unless-stopped
+    restart: always
     env_file:
       - .env
     depends_on:
@@ -36,4 +36,3 @@ volumes:
 networks:
   FloxNet:
     external: true
-

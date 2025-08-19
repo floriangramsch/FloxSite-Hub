@@ -1,6 +1,7 @@
 services:
   app:
     image: registry.floxsite.de/hv-bingerschlag:latest
+    restart: always
     env_file:
       - .env
     networks:
