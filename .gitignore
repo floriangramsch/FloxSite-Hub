@@ -14,3 +14,5 @@ pages/glance/config
 
 .DS_Store
 
+services/pihole/etc-pihole/*
+
